@@ -26,8 +26,16 @@ passport.use(
             if (!existingUser) {
                 new User ({
                     googleID: profile.id
-                }).save();
-            };
+                })
+                .save()
+                .then(user => {
+                    done(null, user);
+                });
+            }
+            // there is allready a user with given ID
+            else {
+                done(null, existingUser);
+            }
         });
     })
 );
