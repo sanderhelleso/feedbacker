@@ -24,7 +24,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // allow routes for app
-require("./routes/authRoutes")(app);
+require("./routes/authroutes")(app);
 
 // listen on port 2000
 const PORT = process.env.PORT || 2000;
