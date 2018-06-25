@@ -14,6 +14,7 @@
   "author": "Sander Hellesø",
   "license": "ISC",
   "dependencies": {
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.3",
     "mongoose": "^5.1.6",
     "nodemon": "^1.17.5",
