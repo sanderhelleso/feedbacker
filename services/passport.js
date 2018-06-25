@@ -16,10 +16,18 @@ passport.use(
         clientSecret: keys.googleClientSecret,
         callbackURL: "/auth/google/callback"
     }, (accesToken, refreshToken, profile, done) => {
-        console.log("profile token", profile.id);
-        // insert new user
-        new User ({
+
+        // check if user exists
+        User.findOne({
             googleID: profile.id
-        }).save();
+        })
+        .then((existingUser) => {
+            // insert new user if not present
+            if (!existingUser) {
+                new User ({
+                    googleID: profile.id
+                }).save();
+            };
+        });
     })
 );
