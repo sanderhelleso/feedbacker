@@ -1,7 +1,12 @@
 // initialize app as express
 const express = require("express");
-const app = express();
+const mongoose = require("mongoose");
+const keys = require("./config/keys");
 require("./services/passport"); // require custom module
+
+// connect mongoDB
+mongoose.connect(keys.mongoURI);
+const app = express();
 
 // allow routes for app
 require("./routes/authRoutes")(app);
