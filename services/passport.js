@@ -9,6 +9,11 @@ const keys = require("../config/keys");
 // load "user" model
 const User = mongoose.model("users");
 
+// identify user for cookie
+passport.serializeUser((user, done) => {
+    done(null, user.id); // mongo UID, NOT google ID
+});
+
 // create new instance of strategy
 passport.use(
     new GoogleStrategy({
