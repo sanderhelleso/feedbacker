@@ -15,4 +15,9 @@ module.exports = app => {
         "/auth/google/callback",
         passport.authenticate("google")
     );
+
+    // check oauth flow and get access
+    app.get("/api/current_user", (req, res) => {
+        res.send(req.user);
+    });
 }
