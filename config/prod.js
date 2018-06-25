@@ -1,4 +1,4 @@
-// prod.js - production keys, DONT COMMIT
+// prod.js - production keys
 module.exports = {
     googleClientID: process.env.GOOGLE_CLINET_ID,
     googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
