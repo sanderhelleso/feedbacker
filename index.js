@@ -1,41 +1,13 @@
-// require common modules
-const express = require("express");
-
-// passport & google oauth
-const passport = require("passport");
-const GoogleStrategy = require("passport-google-oauth20");
-
-// import keys module
-const keys = require("./config/keys");
-
 // initialize app as express
+const express = require("express");
 const app = express();
+require("./services/passport"); // require custom module
 
-// create new instance of strategy
-passport.use(
-    new GoogleStrategy({
-        clientID: keys.googleClientID,
-        clientSecret: keys.googleClientSecret,
-        callbackURL: "/auth/google/callback"
-    }, accesToken => {
-        console.log(accesToken);
-    })
-);
-
-// google sign in route
-app.get(
-    "/auth/google", 
-    passport.authenticate("google", {
-        scope: ["profile", "email"]
-    })
-);
-
-// google sign in handler
-app.get(
-    "/auth/google/callback",
-    passport.authenticate("google")
-);
+// allow routes for app
+require("./routes/authRoutes")(app);
 
 // listen on port 2000
 const PORT = process.env.PORT || 2000;
-app.listen(PORT);
+app.listen(PORT, () => {
+    console.log("app started on " + PORT);
+});
