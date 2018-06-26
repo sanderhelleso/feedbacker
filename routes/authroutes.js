@@ -13,7 +13,12 @@ module.exports = app => {
     // google sign in handler
     app.get(
         "/auth/google/callback",
-        passport.authenticate("google")
+        passport.authenticate("google"),
+
+        // redirect user after successfull signin
+        (req, res) => {
+            res.redirect("/surveys");
+        }
     );
 
     // logout current user
