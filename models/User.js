@@ -4,7 +4,8 @@ const { Schema } = mongoose; // same as Schema = mongoose.Schema;
 
 // define "users" schema
 const userSchema = new Schema({
-    googleID: String
+    googleID: String,
+    credits: { type: Number, default: 0 }
 });
 
 // create collection "users"
