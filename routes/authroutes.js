@@ -21,10 +21,10 @@ module.exports = app => {
         }
     );
 
-    // logout current user
+    // logout current user & redirect to home
     app.get("/api/logout", (req, res) => {
         req.logout();
-        res.send(req.user);
+        res.redirect("/");
     }); 
 
     // check oauth flow and get access
