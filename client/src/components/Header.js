@@ -1,3 +1,4 @@
+// import component from React
 import React, { Component } from "react";
 
 // Header component
@@ -20,4 +21,5 @@ class Header extends Component {
     }
 }
 
+// export Header component
 export default Header;
