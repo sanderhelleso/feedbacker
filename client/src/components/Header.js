@@ -1,8 +1,25 @@
 // import component from React
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 // Header component
 class Header extends Component {
+
+    // auth states
+    renderContent() {
+        switch (this.props.auth) {
+            case null:
+                return;
+
+            case false:
+                return <li><a href="/auth/google">Login With Google</a></li>;
+
+            default:
+                return <li><a>Logout</a></li>;
+        }
+    }
+
+    // render function
     render() {
         return(
             <nav>
@@ -11,9 +28,7 @@ class Header extends Component {
                         Feedbacker
                     </a>
                     <ul className="right">
-                        <li>
-                            <a>Login With Google</a>
-                        </li>
+                        {this.renderContent()}
                     </ul>
                 </div>
             </nav>
@@ -21,5 +36,10 @@ class Header extends Component {
     }
 }
 
+// map component state
+function mapStateToProps({ auth }) {
+    return { auth }
+}
+
 // export Header component
-export default Header;
+export default connect(mapStateToProps)(Header);

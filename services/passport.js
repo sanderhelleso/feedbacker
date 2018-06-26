@@ -29,11 +29,10 @@ passport.use(
             callbackURL: "/auth/google/callback",
             proxy: true
         },
-        async (profile, done) => {
+        // THIS PASSPORT FUNC NEED 4 PARAMS TO RUN
+        async (accesToken, refreshToken, profile, done) => {
             // check if user exists
-            const existingUser = await User.findOne({
-                googleID: profile.id
-            });
+            const existingUser = await User.findOne({ googleID: profile.id });
 
             // we already have a record with gived profile ID
             if (existingUser) {
@@ -41,9 +40,7 @@ passport.use(
             }
 
             // insert new user if not present
-            const user = await new User({
-                googleID: profile.id
-            }).save();
+            const user = await new User({ googleID: profile.id}).save();
             done(null, user);
         }
     )
