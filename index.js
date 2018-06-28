@@ -31,6 +31,7 @@ app.use(passport.session());
 // allow routes for app
 require("./routes/authroutes")(app);
 require("./routes/billingroutes")(app);
+require("./routes/surveyroutes")(app);
 
 // serve ut production assets
 if (process.env.NODE_ENV === "production") {
