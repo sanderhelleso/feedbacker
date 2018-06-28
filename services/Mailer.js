@@ -4,5 +4,7 @@ const keys = require("../config/keys");
 
 // mailer class
 class Mailer extends helper.Mail {
-    
+
 }
+
+module.exports = Mailer;
