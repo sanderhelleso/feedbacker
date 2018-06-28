@@ -6,6 +6,7 @@ const passport =  require("passport");
 const bodyParser = require("body-parser");
 const keys = require("./config/keys");
 require("./models/User"); // require db module
+require("./models/Survey");
 require("./services/passport"); // require passport module
 
 // connect mongoDB
