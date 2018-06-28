@@ -4,17 +4,17 @@ const requireCredits = require("../middlewares/requireCredits");
 const Mailer = require("../services/Mailer");
 const surveyTepmplate = require("../services/emailTemplates/surveyTemplate");
 
-const Surveys = mongoose.model("surveys");
+const Survey = mongoose.model("surveys");
 
 module.exports = app => {
     app.post("/api/surveys", requireLogin, requireCredits, (req, res) => {
-        const { title, subject, body, recepients } = req.body;
+        const { title, subject, body, recipients } = req.body;
 
         const survey = new Survey({
             title,
             subject,
             body,
-            recepients: recepients.split(",").map(email => ({ email: email.trim() })),
+            recepients: recipients.split(",").map(email => ({ email: email.trim() })),
             _user: req.user.id,
             dateSent: Date.now()
         });
