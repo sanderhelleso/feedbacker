@@ -12,6 +12,12 @@ module.exports = app => {
         res.send("Thanks for voting!");
     });
 
+    // webhook
+    app.get("/api/surveys/webhooks", (req, res) => {
+        console.log(req.body);
+        res.send({});
+    });
+
     // post a new mail survey
     app.post("/api/surveys", requireLogin, requireCredits, async (req, res) => {
         const { title, subject, body, recipients } = req.body;
@@ -24,8 +30,6 @@ module.exports = app => {
             _user: req.user.id,
             dateSent: Date.now()
         });
-
-        console.log(survey);
 
         // send email
         const mailer = new Mailer(survey, surveyTepmplate(survey));
