@@ -36,7 +36,7 @@ class Header extends Component {
                         className="left brand-logo">
                         Feedbacker
                     </Link>
-                    <ul className="right">
+                    <ul style={{ margin: "0 10px" }} className="right">
                         {this.renderContent()}
                     </ul>
                 </div>
