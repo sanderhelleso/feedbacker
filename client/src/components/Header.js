@@ -30,7 +30,7 @@ class Header extends Component {
     // render function
     render() {
         return(
-            <nav>
+            <nav style={{ marginBottom: "50px" }}>
                 <div className="nav-wrapper">
                     <Link style={{ margin: "0 20px" }} to={this.props.auth ? "/surveys" : "/"}
                         className="left brand-logo">
