@@ -34,7 +34,7 @@ function validate(values) {
     const errors = {};
 
     // check email list
-    errors.emails  = validateEmails(values.emails || "");
+    errors.recipients  = validateEmails(values.recipients || "");
 
     // error checking
     _.each(formFields, ({ name }) => {
