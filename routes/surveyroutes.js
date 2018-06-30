@@ -25,6 +25,12 @@ module.exports = app => {
                 return { email, surveyId: match.surveyId, choice: match.choice }
             }
         });
+
+        // remove undefined values
+        const compactEvents = _.compact(event);
+
+        // remove duplicate values
+        const unqiueEvents = _.uniqBy(compactEvents);
     });
 
     // post a new mail survey
