@@ -1,3 +1,6 @@
+const _ = require("lodash");
+const Path = require("path-parser");
+const { URL } = require("url");
 const mongoose = require("mongoose");
 const requireLogin = require("../middlewares/requireLogin");
 const requireCredits = require("../middlewares/requireCredits");
@@ -14,8 +17,14 @@ module.exports = app => {
 
     // webhook
     app.get("/api/surveys/webhooks", (req, res) => {
-        console.log(req.body);
-        res.send({});
+        const events = _.map(req.body, ({ email, url }) => {
+            const path = new URL(url).pathname;
+            const parser = new Path("/api/surveys/:surveyId/:choice"); // /: wildcard
+            const match = parser.test(pathname);
+            if (match) {
+                return { email, surveyId: match.surveyId, choice: match.choice }
+            }
+        });
     });
 
     // post a new mail survey
