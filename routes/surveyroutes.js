@@ -17,20 +17,24 @@ module.exports = app => {
 
     // webhook
     app.get("/api/surveys/webhooks", (req, res) => {
-        const events = _.map(req.body, ({ email, url }) => {
-            const path = new URL(url).pathname;
-            const parser = new Path("/api/surveys/:surveyId/:choice"); // /: wildcard
-            const match = parser.test(pathname);
+        const parser = new Path("/api/surveys/:surveyId/:choice"); // /: wildcard
+        const events = _chain(req.body)
+        .map(req.body, ({ email, url }) => {
+            const match = parser.test(new URL(url).pathname);
             if (match) {
                 return { email, surveyId: match.surveyId, choice: match.choice }
             }
-        });
+        })
 
         // remove undefined values
-        const compactEvents = _.compact(event);
+        .compact()
 
         // remove duplicate values
-        const unqiueEvents = _.uniqBy(compactEvents);
+        .uniqBy("email", "surveyId")
+        .value();
+
+        res.send({});
+        console.log(event);
     });
 
     // post a new mail survey
