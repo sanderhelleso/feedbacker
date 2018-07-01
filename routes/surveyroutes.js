@@ -35,7 +35,7 @@ module.exports = app => {
         .uniqBy("email", "surveyId")
 
         // update value query
-        .each(event => {
+        .each(({ surveyId, email, choice }) => {
             Survey.updateOne({
                 _id: surveyId,
                 recipients: {
