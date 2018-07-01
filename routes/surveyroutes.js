@@ -7,11 +7,12 @@ const requireCredits = require("../middlewares/requireCredits");
 const Mailer = require("../services/Mailer");
 const surveyTepmplate = require("../services/emailTemplates/surveyTemplate");
 
+// model
 const Survey = mongoose.model("surveys");
 
 module.exports = app => {
-    // user voting screen
-    app.get("/api/surveys/thanks", (req, res) => {
+    // user voting / thank you screen
+    app.get("/api/surveys/:surveyId/:choice", (req, res) => {
         res.send("Thanks for voting!");
     });
 
@@ -43,13 +44,15 @@ module.exports = app => {
                 }
             }, {
                 $inc: { [choice]: 1 },
-                $set: { "recipients.$.responded": true }
+                $set: { "recipients.$.responded": true },
+                lastResponded: new Date()
             }).exec(); // execute query
         })
 
         // return value
         .value();
 
+        // send response so it dosent hang
         res.send({});
     });
 
