@@ -19,7 +19,9 @@ module.exports = app => {
     app.get("/api/surveys/webhooks", (req, res) => {
         const parser = new Path("/api/surveys/:surveyId/:choice"); // /: wildcard
         const events = _chain(req.body)
-        .map(req.body, ({ email, url }) => {
+
+        // itterate
+        _.chain(req.body, ({ email, url }) => {
             const match = parser.test(new URL(url).pathname);
             if (match) {
                 return { email, surveyId: match.surveyId, choice: match.choice }
@@ -31,10 +33,24 @@ module.exports = app => {
 
         // remove duplicate values
         .uniqBy("email", "surveyId")
+
+        // update value query
+        .each(event => {
+            Survey.updateOne({
+                _id: surveyId,
+                recipients: {
+                    $eleMatch: { email: email, responded: false }
+                }
+            }, {
+                $inc: { [choice]: 1 },
+                $set: { "recipients.$.responded": true }
+            }).exec(); // execute query
+        })
+
+        // return value
         .value();
 
         res.send({});
-        console.log(event);
     });
 
     // post a new mail survey
