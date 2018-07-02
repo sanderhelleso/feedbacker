@@ -10,7 +10,9 @@ require("./models/Survey");
 require("./services/passport"); // require passport module
 
 // connect mongoDB
+mongoose.Promise = global.Promise;
 mongoose.connect(keys.mongoURI);
+
 const app = express();
 
 // allow body parser
