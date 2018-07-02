@@ -14,7 +14,8 @@ module.exports = app => {
     
     // list all surveys
     app.get("/api/surveys", requireLogin, async (req, res) => {
-        const surveys = await Survey.find({ _user: req.user.id });
+        const surveys = await Survey.find({ _user: req.user.id }) // find user
+        .select({ recipients: false }); // select given properties
         res.send(surveys);
     });
 
@@ -26,10 +27,9 @@ module.exports = app => {
     // webhook
     app.get("/api/surveys/webhooks", (req, res) => {
         const parser = new Path("/api/surveys/:surveyId/:choice"); // /: wildcard
-        const events = _chain(req.body)
 
         // itterate
-        _.chain(req.body, ({ email, url }) => {
+        const events = _.chain(req.body, ({ email, url }) => {
             const match = parser.test(new URL(url).pathname);
             if (match) {
                 return { email, surveyId: match.surveyId, choice: match.choice }
